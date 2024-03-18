@@ -1,0 +1,43 @@
+#include<iostream>
+#include<vector>
+#include<stdlib.h>
+using namespace std;
+int m,num,result;
+char c;
+void quaylui(const vector<int> arr,int index,int& sum,int& result) {
+    if (sum==m && index==arr.size()-1) {
+        result++;
+        return;
+    }
+    for (int i=0; i<2;i++) {
+        for (int j=index;j<arr.size()-1;j++){
+            if (i==0) {
+                sum+= arr[j+1];
+            }
+            else {
+                sum-=arr[j+1];
+            }
+            quaylui(arr,index+1,sum, result);
+        }
+        if (i==0) {
+                sum-= arr[j+1];
+        }
+        else {
+                sum+=arr[j+1];
+        }
+
+    }
+}
+int main() {
+    std::vector<int> arr;
+    while( cin >> num ) {
+        arr.push_back(num);
+        cin.get(c);
+        if (c=='\n') break;
+    }
+    cin >> m;
+    result=0;
+    quaylui(arr,0,arr[0],result);
+    cout << result;
+    return 0;
+}
