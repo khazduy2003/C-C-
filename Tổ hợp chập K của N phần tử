@@ -1,0 +1,35 @@
+// Liet ke hoan vi cua n phan tu 
+
+#include <bits/stdc++.h> 
+
+int n,k;
+void printResult(std::vector<int>& ToHop) {
+	for (int i=0;i<k;i++) {
+		std::cout << ToHop[i] << " ";
+	}
+	std::cout<< std::endl;
+	
+}
+void Try(std::vector<int>& ToHop , int n, int k,int start) {
+	
+	if (ToHop.size()==k) printResult(ToHop); 
+	else {
+		for (int i=start;i<=n;i++) {
+			ToHop.push_back(i);
+			Try(ToHop,n,k,i+1);
+			ToHop.pop_back();
+		}
+	}
+}
+int main() {
+	std::cout << "Nhap n: " ;
+	std::cin >> n;
+	std::cout << "Nhap k: " ;
+	std::cin >> k;
+	//std::cout << std::endl;
+	std::vector<int> ToHop;
+	for (int i=1;i<=n;i++) {
+		Try(ToHop,n,i,1);
+	}
+	return 0;
+} 
