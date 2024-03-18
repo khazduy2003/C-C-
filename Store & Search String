@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX_KEY_LENGTH 50
+#define MAX_N 100000
+
+int main() {
+    char keys[MAX_N][MAX_KEY_LENGTH + 1]; // +1 de chua phan tu /0 cuoi file 
+    int n = 0; // So tu trong database 
+
+    // Doc file va day vao mang 
+    char input[MAX_KEY_LENGTH + 1];
+    while (scanf("%s", input) == 1) {
+        if (strcmp(input, "*") == 0) {
+            break;
+        }
+        strcpy(keys[n], input);
+        n++;
+    }
+
+    // Tiep tuc doc file de kiem tra 
+    char cmd[MAX_KEY_LENGTH + 1];
+    char action[MAX_KEY_LENGTH + 1];
+    while (scanf("%s %s", cmd, action) == 2) {
+        int found = 0;
+
+        if (strcmp(cmd, "find") == 0) {
+            for (int i = 0; i < n; i++) {
+                if (strcmp(keys[i], action) == 0) {
+                    found = 1;
+                    break;
+                }
+            }
+        } else if (strcmp(cmd, "insert") == 0) {
+            for (int i = 0; i < n; i++) {
+                if (strcmp(keys[i], action) == 0) {
+                    found = 1;
+                    break;
+                }
+            }
+            if (!found) {
+                strcpy(keys[n], action);
+                n++;
+            }
+        }
+
+        printf("%d\n", found);
+    }
+
+    return 0;
+}
