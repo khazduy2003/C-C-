@@ -1,0 +1,44 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int a[10000],n=0;
+int mark[10000];
+int max=0;
+int i;
+int rob(int i, int (&a)[10000]){
+	if (mark[i] != 0 ) return mark[i];
+	else if (i<0) return 0;
+	else {
+		mark[i]=max( rob(i-1,a), rob(i-2,a) + a[i]);
+		return mark[i];
+	}
+}
+int main() {
+	int choice;
+	while (1) {
+		cout << "----------------------Menu----------------------" << endl ;
+		cout << "1. Play" << endl ;
+		cout << "2. Exit" << endl ;
+		cout << "--> " ;
+		cin >> choice;
+		if (choice == 1) {
+			do {
+				cin >> a[n];
+				n++;
+			} while (cin.peek() != '\n');
+			for (int i=0;i<n;i++) {
+				mark[i]=0;
+			}
+
+			cout << rob(n-1,a) << endl;
+			return 0;
+		}
+		else if (choice == 2 ) {
+			return 0;
+		}
+		else {
+			cout << "Vui long chon 1 hoac 2 !" << endl;
+		}
+	}
+	return 0;
+}
