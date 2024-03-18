@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
+#include <sstream>
+#include <map>
+
+using namespace std;
+
+struct Call {
+    string from_number;
+    string to_number;
+    string date;
+    string from_time;
+    string end_time;
+};
+
+bool isPhoneNumberValid(const string& phone_number) {
+    for (char c : phone_number) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return phone_number.length() == 10;
+}
+
+int main() {
+    vector<Call> calls;
+    string line;
+    while (getline(cin, line)) {
+        if (line == "#") {
+            break;
+        }
+        istringstream iss(line);
+        string command, from_number, to_number, date, from_time, end_time;
+        iss >> command >> from_number >> to_number >> date >> from_time >> end_time;
+        
+        if (isPhoneNumberValid(from_number) && isPhoneNumberValid(to_number)) {
+            Call call;
+            call.from_number = from_number;
+            call.to_number = to_number;
+            call.date = date;
+            call.from_time = from_time;
+            call.end_time = end_time;
+            calls.push_back(call);
+        }
+    }
+
+    map<string, int> callCounts;
+    map<string, int> callDurations;
+
+    while (getline(cin, line)) {
+        if (line == "#") {
+            break;
+        }
+
+        if (line == "?check_phone_number") {
+            int is_valid = 1;
+            for (const Call& call : calls) {
+                if (!isPhoneNumberValid(call.from_number) || !isPhoneNumberValid(call.to_number)) {
+                    is_valid = 0;
+                    break;
+                }
+            }
+            cout << is_valid << endl;
+        } else if (line.find("?number_calls_from") == 0) {
+            string phone_number = line.substr(19);
+            int count = 0;
+            for (const Call& call : calls) {
+                if (call.from_number == phone_number) {
+                    count++;
+                }
+            }
+            cout << count << endl;
+        } else if (line == "?number_total_calls") {
+            cout << calls.size() << endl;
+        } else if (line.find("?count_time_calls_from") == 0) {
+            string phone_number = line.substr(22);
+            int total_duration = 0;
+            for (const Call& call : calls) {
+                if (call.from_number == phone_number) {
+                    struct tm t1 = {}, t2 = {};
+                    sscanf(call.from_time.c_str(), "%d:%d:%d", &t1.tm_hour, &t1.tm_min, &t1.tm_sec);
+                    sscanf(call.end_time.c_str(), "%d:%d:%d", &t2.tm_hour, &t2.tm_min, &t2.tm_sec);
+                    total_duration += difftime(mktime(&t2), mktime(&t1));
+                }
+            }
+            cout << total_duration << endl;
+        }
+    }
+
+    return 0;
+}
+
