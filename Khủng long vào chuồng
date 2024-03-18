@@ -1,0 +1,47 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+#include <string>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    stack <int> c;
+    queue <int> h;
+    int center;
+    string input;
+    int a[n]; // thay the cho nhap vao
+    for (int i = 0; i < n; i++)
+    {
+       cin >> a[i];
+    }
+    for (int i = 0 ; i < n; i++)
+    {
+        c.push(a[i]);
+    }
+
+    
+    cin >> input;
+    cout << input << endl;
+    for (int i = 0; i < input.size() ; i++)         
+    {
+        if (input[i]== 'C')
+        {
+            center = c.top();
+            h.push(center);
+            c.pop();
+        }else if (input[i] == 'H' ) {
+            center = h.front();
+            h.pop();
+            c.push(center);
+        }  
+    }
+    cout << c.size() << endl;
+    while (c.empty() == 0 )
+    {
+        cout << c.top();
+        c.pop();
+    }
+    
+}
