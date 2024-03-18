@@ -1,0 +1,36 @@
+// Liet ke hoan vi cua n phan tu
+#include <bits/stdc++.h> 
+int n;
+void printResult(std::vector<int>& HoanVi) {
+	for (int i=0;i<n;i++) {
+		std::cout << HoanVi[i] << " ";
+	}
+	std::cout<< std::endl;
+}
+void Try(std::vector<int>& HoanVi , std::vector<bool>& check, int n) {
+	
+	if (HoanVi.size()==n) printResult(HoanVi); 
+	else {
+		for (int i=0;i<n;i++) {
+			if (check[i]==false) {
+				
+				check[i]=true;
+				HoanVi.push_back(i+1);
+				
+				Try(HoanVi,check,n);
+				
+				check[i]=false;
+				HoanVi.pop_back();
+			}
+		}
+	}
+}
+int main() {
+	std::cout << "Nhap n: " ;
+	std::cin >> n;
+	std::vector<int> HoanVi;
+	std::vector<bool> check(n,false);
+	Try(HoanVi,check,n);
+	return 0;
+	
+} 
