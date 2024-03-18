@@ -1,0 +1,48 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int a[10000],n=0;
+int mark[10000];
+int max=0;
+int i;
+int rob(int i, std::vector<int>& myVector){
+	if (mark[i] != 0 ) return mark[i];
+	if (i<0) return 0;
+	else {
+        mark[i] = max(rob(i-1), rob(i-2) + a[i]);
+        return mark[i];
+	}
+
+}
+int main() {
+	int choice;
+	while (1) {
+		std::cout << "----------------------Menu----------------------" << endl ;
+		std::cout << "1. Play" << endl ;
+		std::cout << "2. Exit" << endl ;
+		std::cout << "--> " ;
+		std::cin >> choice;
+		if (choice == 1) {
+			std::vector<int> myVector={0,0};
+			do {
+				std::cin >> a[n];
+				n++;
+			} while (cin.peek() != '\n');
+            for (int i:a) {
+                myVector.push_back( max(myVector[i-1], myVector[i-2] +a[i]) );
+            }
+            std::cout << myVector.back();
+
+
+			return 0;
+		}
+		else if (choice == 2 ) {
+			return 0;
+		}
+		else {
+			cout << "Vui long chon 1 hoac 2 !" << endl;
+		}
+	}
+	return 0;
+}
