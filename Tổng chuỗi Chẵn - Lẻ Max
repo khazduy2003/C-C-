@@ -1,0 +1,53 @@
+// Tim day con le/chan lon nhat
+#include<iostream>
+#include <bits/stdc++.h>
+
+int i;
+int a[100000];
+bool BC[100000],BL[100000];
+int SL[100000],SC[100000];
+using namespace std;
+int n;
+int main() {
+	cin >> n;
+	for (i=1;i<=n;i++) {
+		cin >> a[i];
+		
+	}
+	for (i=2;i<=n;i++) {
+		if (a[i]%2==0) {
+			if (BC[i-1]==true && SC[i-1] > 0) {
+				SC[i] = SC[i-1] + a[i];
+			} else {
+				SC[i] = a[i];
+			}
+			BC[i]=true;
+			
+			if (BL[i-1] == true ) {
+				SL[i] = SL[i-1] +a[i];
+				BL[i]= true;
+			} else BL[i] = false;
+		}
+		else {
+			if (BL[i-1]==true) {
+				SC[i] =SL[i-1] + a[i];
+				BC[i]=true;	
+			} else BC[i] = false;
+			
+			if (BC[i-1]==true && SC[i-1] >0) {
+				SL[i] = SC[i-1] +a[i];
+			} else SL[i] = a[i];
+			BL[i]=true;
+		}
+	}
+	int max=-100000000;
+	for (i = 1;i<=n;i++) {
+		if (BC[i]==true && SC[i] > max) {
+			cout << "Update max: " << SC[i] << endl;
+			max=SC[i];
+		}
+		
+	}
+	cout << "Tong chan lon nhat: " << max;
+	return 0;
+}
