@@ -1,0 +1,39 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int thamSo[10000000];
+int a[10000000];
+int n;
+int main () {
+	int count=1,max=1,start;
+	std::cin >> n;
+	for (int i=0; i<n;i++) {
+		std::cin >> a[i];
+		thamSo[i]=a[i];
+	}
+	/*
+	for (int j=0;j<n;j++) {
+		for (int i=0;i<n;i++) {
+			if (a[i+1] > thamSo[i]) {
+				thamSo[j] = a[i+1];
+				count++;
+	 		}
+		};
+		if (count>max) max=count; 
+		count=1;
+	}
+	*/
+	start=1;
+		for (int i=0;i<n;i++) {
+			if (a[i+1]>a[i]) {
+				count++;
+				if (count>max) max=count;
+			}
+			else {
+				start=i;
+				count=1;
+			}
+		}
+	std::cout << max;
+	return 0;
+} 
